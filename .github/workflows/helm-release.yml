@@ -5,9 +5,8 @@ on:
     branches:
       - main
       - fix-helm-releaser
-    paths:
-      - "*"
-      #- "charts/*/Chart.yaml"
+    # paths:
+    #   - "charts/*/Chart.yaml"
 
 jobs:
   release:
