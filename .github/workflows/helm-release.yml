@@ -13,6 +13,7 @@ jobs:
     permissions:
       contents: write
     runs-on: ubuntu-latest
+    container: ghcr.io/element-hq/chart-releaser:cr-push-fix
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -41,6 +42,6 @@ jobs:
           skip_existing: false
           packages_with_index: true
           charts_dir: charts/
-          skip_cr_install: false
+          skip_cr_install: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
