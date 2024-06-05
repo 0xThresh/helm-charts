@@ -4,14 +4,17 @@ on:
   push:
     branches:
       - main
+      - fix-helm-releaser
     paths:
-      - "charts/*/Chart.yaml"
+      - "*"
+      #- "charts/*/Chart.yaml"
 
 jobs:
   release:
     permissions:
       contents: write
     runs-on: ubuntu-latest
+    container: ghcr.io/element-hq/chart-releaser:cr-push-fix
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -34,7 +37,7 @@ jobs:
           helm repo add open-webui https://helm.openwebui.com/
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
+        uses: element-hq/chart-releaser-action@1389a6afc9af1b11ab9e79267f371d694e4995b2
         with:
           skip_existing: false
           packages_with_index: true
