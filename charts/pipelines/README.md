@@ -1,6 +1,6 @@
 # pipelines
 
-![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![AppVersion: alpha](https://img.shields.io/badge/AppVersion-alpha-informational?style=flat-square)
+![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![AppVersion: alpha](https://img.shields.io/badge/AppVersion-alpha-informational?style=flat-square)
 
 Pipelines: UI-Agnostic OpenAI API Plugin Framework
 
@@ -33,6 +33,7 @@ helm upgrade --install open-webui open-webui/pipelines
 | affinity | object | `{}` | Affinity for pod assignment |
 | annotations | object | `{}` |  |
 | clusterDomain | string | `"cluster.local"` | Value of cluster domain |
+| existingSecrets | string | `nil` | Existing Kubernetes secrets that hold values needed for pipelines, such as API keys, database secrets, etc.. |
 | extraEnvVars | list | `[{"name":"PIPELINES_URLS","value":"https://github.com/open-webui/pipelines/blob/main/examples/filters/detoxify_filter_pipeline.py"}]` | Additional environments variables on the output Deployment definition. These are used to pull initial Pipeline files, and help configure Pipelines with required values (e.g. Langfuse API keys) |
 | extraEnvVars[0] | object | `{"name":"PIPELINES_URLS","value":"https://github.com/open-webui/pipelines/blob/main/examples/filters/detoxify_filter_pipeline.py"}` | Example pipeline to pull and load on deployment startup, see current pipelines here: https://github.com/open-webui/pipelines/blob/main/examples |
 | image.pullPolicy | string | `"Always"` |  |
@@ -64,6 +65,24 @@ helm upgrade --install open-webui open-webui/pipelines
 | service.port | int | `9099` |  |
 | service.type | string | `"ClusterIP"` |  |
 | tolerations | list | `[]` | Tolerations for pod assignment |
+
+## Using Existing Secrets
+Many environment variables that are passed to Pipelines could be sensitive values. To avoid having these values in plain text, you can use existing secrets and pass the secret name as a value.
+
+You can create a secret for your Pipelines server with the commands below:
+```
+kubectl create secret generic postgres --from-literal=password=my_secret_password
+```
+
+Using the example secret created above, you can now add this value to an environment variable in your Pipelines server by adding the following to your `values.yaml` file:
+```
+existingSecrets:
+  - envVarName: DB_PASSWORD # -- Name of the environment variable that will use the value on the Pipelines server
+    secretName: postgres # -- Name of the existing Kubernetes secret
+    secretValue: password # -- Value to load from the existing Kubernetes secret
+```
+
+Additional secrets can be added as a separate list in `existingSecrets`.
 
 ----------------------------------------------
 

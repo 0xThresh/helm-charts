@@ -54,18 +54,11 @@ extraEnvVars:
   # -- Example pipeline to pull and load on deployment startup, see current pipelines here: https://github.com/open-webui/pipelines/blob/main/examples
   - name: PIPELINES_URLS
     value: "https://github.com/open-webui/pipelines/blob/main/examples/filters/detoxify_filter_pipeline.py"
-  # -- Langfuse example, including values used in Langfuse filter to connect
-  # - name: PIPELINES_URLS
-  #   value: "https://github.com/open-webui/pipelines/blob/main/examples/filters/langfuse_filter_pipeline.py"  
-  # - name: LANGFUSE_PUBLIC_KEY
-  #   valueFrom:
-  #     secretKeyRef: 
-  #       name: langfuse-keys
-  #       key: public-key
-  # - name: LANGFUSE_SECRET_KEY
-  #   valueFrom:
-  #     secretKeyRef: 
-  #       name: langfuse-keys
-  #       key: secret-key
-  # - name: LANGFUSE_HOST
-  #   value: https://us.cloud.langfuse.com
+
+# -- Existing Kubernetes secrets that hold values needed for pipelines, such as API keys, database secrets, etc..
+existingSecrets:
+  # - envVarName: DB_PASSWORD # -- Name of the environment variable that will use the value on the Pipelines server
+  #   secretName: postgres # -- Name of the existing Kubernetes secret
+  #   secretValue: password # -- Value to load from the existing Kubernetes secret
+
+
