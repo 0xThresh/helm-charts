@@ -59,13 +59,13 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Add Dependency Repos
-        run: |
-          helm repo add ollama https://otwld.github.io/ollama-helm/
-          helm repo add open-webui https://helm.openwebui.com/
-          helm repo add tika https://apache.jfrog.io/artifactory/tika/
-          helm repo add redis https://charts.bitnami.com/bitnami
-          helm repo add milvus https://zilliztech.github.io/milvus-helm
+      # - name: Add Dependency Repos
+      #   run: |
+      #     helm repo add ollama https://otwld.github.io/ollama-helm/
+      #     helm repo add open-webui https://helm.openwebui.com/
+      #     helm repo add tika https://apache.jfrog.io/artifactory/tika/
+      #     helm repo add redis https://charts.bitnami.com/bitnami
+      #     helm repo add milvus https://zilliztech.github.io/milvus-helm
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.7.0

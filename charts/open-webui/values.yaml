@@ -109,7 +109,7 @@ redis-cluster:
   # -- Replica configuration for the Redis cluster
   replica:
     # -- Number of Redis replica instances
-    replicaCount: 3
+    replicaCount: 4
 
 rag:
   # -- Enable RAG
